@@ -36,9 +36,9 @@ batch_size = 32
 
 explore_start = 0.90        # exploration probability at start
 explore_stop = 0.0001            # minimum exploration probability
-decay_rate = 0.00006
+decay_rate = 0.0001
 
-gamma = 0.85               # Discounting rate
+gamma = 0.8               # Discounting rate
 
 pretrain_length = batch_size   # Number of experiences stored in the Memory when initialized for the first time
 memory_size = 1000000          # Number of experiences the Memory can keep
@@ -195,7 +195,7 @@ def predict_action(explore_start, explore_stop, decay_rate, decay_step, state, a
     mn_corr = array_mean_normalization(futur_correlation_list)
     mn_Qs = array_mean_normalization(Qs[0])
 
-    ultra_instinct = np.add(mn_Qs,np.divide(mn_corr,1.20))
+    ultra_instinct = np.add(mn_Qs,mn_corr)
     # print("ultra_instinct is : ", np.divide(mn_corr,2), " and ", mn_corr)
 
     for action in actions_choice:
@@ -257,7 +257,7 @@ with tf.Session() as sess:
         print("dq.loss is : ", dq.loss)
         print("episode is : ", episode)
         if(episode == 200):
-          decay_rate = 0.002
+          decay_rate = 0.0001
           explore_stop = 0.00001            # minimum exploration probability
 
 
